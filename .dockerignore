@@ -1,0 +1,13 @@
+# docker related
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# git related
+.git/
+.github/
+.gitignore
+
+# root
+CHANGELOG.md
+README.md

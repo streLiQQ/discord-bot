@@ -1,10 +1,13 @@
-version: "3.8"
+version: "3.9"
 
 services:
   discord-bot:
-    build: .
-    container_name: discord-bot
-    env_file: .env          # local .env on the server (do NOT commit to git)
+    container_name: discord_bot
+    build:
+      context: https://github.com/streLiQQ/discord-bot.git
     restart: unless-stopped
-    # volumes:                 # optional for dev: to mount local code into container
-    #   - ./:/app
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      APP_ID: ${APP_ID}
+      SERVER_ID: ${SERVER_ID}
+      WEATHER_API: ${WEATHER_API}
