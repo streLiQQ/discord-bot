@@ -1,0 +1,24 @@
+{
+ "name": "Tara",
+ "version": "1.0.1",
+ "description": "Personal nodejs bot",
+ "type": "module",
+ "main": "index.js",
+ "keywords": [],
+ "author": "Alexandre Nigaglioni",
+ "license": "MIT",
+ "dependencies": {
+  "cheerio": "^1.0.0-rc.12",
+  "discord.js": "^14.14.1",
+  "dotenv": "^16.3.1",
+  "node-fetch": "^3.3.2",
+  "world-countries": "^5.0.0"
+ },
+ "scripts": {
+  "dev": "node index.js"
+ },
+ "imports": {
+  "#events/*": "./events/*",
+  "#commands/*": "./events/commands/*.js"
+ }
+}

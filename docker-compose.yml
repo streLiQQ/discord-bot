@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  discord-bot:
+    build: .
+    container_name: discord-bot
+    env_file: .env          # local .env on the server (do NOT commit to git)
+    restart: unless-stopped
+    # volumes:                 # optional for dev: to mount local code into container
+    #   - ./:/app

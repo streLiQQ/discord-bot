@@ -1,0 +1,75 @@
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import fetch from 'node-fetch';
+
+const apiKey = process.env.RIOT_API_KEY;
+
+//
+const create = () => {
+    const command = new SlashCommandBuilder()
+        .setName('tararank')
+        .setDescription('Affiche le rank LoL de Menbalekou!')
+        .addStringOption(option =>
+			option.setName('pseudo')
+			.setDescription('Le pseudo')
+			.setRequired(true))
+		.addStringOption(option =>
+			option.setName('tag')
+			.setDescription('(EUW, 9999, etc)')
+			.setRequired(true));
+			
+    return command.toJSON();
+};
+
+
+//
+const invoke = (interaction) => {
+	
+	const gameName = interaction.options.getString('pseudo');
+	const tagLine = interaction.options.getString('tag');
+	
+	fetchRiotAccount(gameName, tagLine);
+    
+        // Create a MessageEmbed and add an inlined field for each property displayed in the reply message
+	const embed = new EmbedBuilder()
+            .setColor(0x0099FF)
+            .setTitle(`${accountInfoData.puuid}`)
+            .setURL('https://www.op.gg/summoners/euw/Menbalekou-EUW')
+            .setAuthor({ name: 'League of Legends stalking gRem', iconURL: 'https://static.wikia.nocookie.net/leagueoflegends/images/0/07/League_of_Legends_icon.png' })
+            .setDescription(``)
+            .setThumbnail(``)
+            .addFields(
+                { name: 'Champion', value: ``, inline: true },
+                { name: 'Score', value: ``, inline: true },
+				{ name: 'Mode', value: ``, inline: true },
+				
+            )
+            .setImage(``)
+            .setTimestamp()
+            .setFooter({ text: 'Tara est développé par streLi', iconURL: 'https://avatars.githubusercontent.com/u/167698708?v=4' });
+
+        const channel = client.channels.cache.get(channelId);
+        channel.send({ embeds: [embed] });
+};
+
+
+export { create, invoke };
+
+
+// AccountDataFunction
+
+async function fetchRiotAccount(gameName, tagLine) {
+    const accountInfoResponse = await fetch(`https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`, {
+            headers: {
+                'X-Riot-Token': apiKey
+            }
+        });
+
+        if (!accountInfoResponse.ok) {
+            throw new Error('Failed to fetch data from Riot API using tararank');
+        }
+
+        console.log('Fetching data from Riot API using tararank...');
+
+        const accountInfoData = await accountInfoResponse.json();     
+		return accountInfoData;
+}
